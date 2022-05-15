@@ -33,10 +33,7 @@ This mod has three settings which can be configured from in game.
 
 #functions
 fast_craft.register_craft({
-	output = { -- main output
-		item = "item_out",
-		count = n,
-	},
+	output = {"item_out", count},
 	additional_output = { -- replacements and byproducts
 		["ao_1"] = 1
 	},
