@@ -322,6 +322,8 @@ local function craft(player, recipe_index, amount)
 	amount = math.min(amount, can_craft(recipe, inv_list))
 	if amount == 0 then return end
 
+	if recipe.condition and not recipe.condition(player) then return end
+
 	-- taking input
 	for in_item, count in pairs(recipe.input) do
 		local total = count * amount
