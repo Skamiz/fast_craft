@@ -21,7 +21,7 @@ This is due to 'minetest.get_craft_result(recipe)' being the only way to detect
 if a recipe uses replacements. And this function is relatively slow.
 
 #settings
-This mod has two settings which can be configured from in game.
+This mod has three settings which can be configured from in game.
 
 'crafting_steps' - allows you to select which amounts you can craft in bulk
 
