@@ -1,0 +1,21 @@
+# Craft amounts
+#
+# Determines steps in which multiple items can be crafted at a time.
+# auto:
+#	1-5-25-99 for Minetest Game
+#	1-4-16-64 for Mineclone
+#	otehrwise defaults to 1-5-25-99
+crafting_steps (Crafting Steps) enum auto 1-4-16-64,1-5-25-99,auto
+
+# Import Recipes
+#
+# Whether to automatically import recipes from Minetests default
+# crafting system.
+# Can cause significan slowdown on server startup. Especially with large modpacks.
+import_recipes (Import Recipes) bool true
+
+# Simplify Recipes
+#
+# When importing recipes, try to simplify them.
+# example: 3 wood -> 6 wooden slab will be turned into 1 wood -> 2 wooden slab
+simplify_recipes (Simplify Recipes) bool true

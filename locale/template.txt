@@ -1,0 +1,5 @@
+# textdomain: fast_craft
+Craft @1=
+Craft Maximum=
+Refresh Formspec=
+Fast Craft=
