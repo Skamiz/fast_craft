@@ -509,7 +509,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 
 	for k, v in pairs(fields) do
 		-- recipe selected
-		local _, _, craft_index = k:find("recipe_(%d*)")
+		local _, _, craft_index = k:find("recipe_(%d+)")
 		if craft_index then
 			craft_index = tonumber(craft_index)
 			set_fs(player, scroll_index, craft_index)
@@ -517,7 +517,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		end
 
 		-- crafting button pressed
-		local _, _, craft_amount, craft_index = k:find("craft_(%d*)_(%d*)")
+		local _, _, craft_amount, craft_index = k:find("craft_(%d+)_(%d+)")
 		if craft_amount then
 			craft_amount = tonumber(craft_amount)
 			craft_index = tonumber(craft_index)
