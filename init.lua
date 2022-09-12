@@ -6,7 +6,7 @@ WARNING: Is liable to be buggy in case of recipes, which ask for a group ingredi
  to correctly count the items in such a case.
 
 WARNING: Can cause significan slowdown on server startup, when importing recipes.
- 	Specificall 'minetest.get_craft_result(recipe)' is causing the slowdown.
+ 	Specifically 'minetest.get_craft_result(recipe)' is causing the slowdown.
 
 WARNING: Fails if recipe defines replacements for specific items which are only
 requested by group
@@ -372,6 +372,10 @@ local function craft(player, recipe_index, amount)
 		end
 		local leftover = inv:add_item("main", item .. " " .. total % stack_max)
 		minetest.add_item(pos, leftover)
+	end
+
+	if awards then
+		awards.notify_craft(player, recipe.output[1], total)
 	end
 end
 
