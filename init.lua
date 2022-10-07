@@ -26,7 +26,12 @@ TODO: button clikcing sounds
 TODO: maybe do somehting about all that string concatation?
 TODO: callbacks for crafting stuff
 TODO: pressetes for group icons
+TODO: multigroup icons + support for predefined group icons to use an image in stead of an item
 TODO: cache recipes + command to update the cache
+
+TODO: recipe guide page
+TODO: recipes can be hidden form guide; hidden = true
+TODO: crafting conditions can have descriptions which are displayed in recipe section
 
 A way to find changes in the inventory:
 	serialize it, cache it, compare with previous state
@@ -49,6 +54,9 @@ local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
 local games = dofile(modpath .. "/compat.lua")
 
+local sfinv_installed = minetest.global_exists("sfinv")
+
+
 fast_craft = {}
 fast_craft.registered_crafts = {}
 local registered_crafts = fast_craft.registered_crafts
@@ -69,9 +77,11 @@ if minetest.get_modpath("cicrev") then
 	game = "cicrev"
 elseif minetest.get_modpath("mcl_core") then
 	game = "mineclone"
-else
-	-- most likely fallback
+elseif minetest.get_modpath("default") then
 	game = "mtg"
+else
+	-- fallback
+	game = "cicrev"
 end
 
 local group_icons = games[game].group_icons or {}
@@ -511,7 +521,7 @@ end
 
 -- set players inventory formspec to fast_craft
 local function set_fs(player, scroll_index, craft_index)
-	if sfinv then
+	if sfinv_installed then
 		local context = sfinv.get_or_create_context(player)
 		player:set_inventory_formspec(
 		get_craft_formspec(player, scroll_index, craft_index) ..
@@ -565,7 +575,7 @@ end)
 -- OTHER STUFF
 
 minetest.register_on_joinplayer(function(player, last_login)
-	if not sfinv then
+	if not sfinv_installed then
 		player:set_inventory_formspec(get_craft_formspec(player))
 	end
 end)
@@ -584,7 +594,7 @@ minetest.register_chatcommand("fast_craft", {
 
 -- INTEGRATION
 
-if sfinv then
+if sfinv_installed then
 	sfinv.register_page("fast_craft:crafting", {
 	    title = S("Fast Craft"),
 	    get = function(self, player, context)
