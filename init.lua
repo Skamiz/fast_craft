@@ -584,7 +584,7 @@ end)
 
 minetest.register_chatcommand("fast_craft", {
 	params = "",
-	description = "Set inventory formspec to fact_craft.",
+	description = "Set inventory formspec to fast_craft.",
 	privs = {},
 	func = function(name, param)
 		local player = minetest.get_player_by_name(name)
