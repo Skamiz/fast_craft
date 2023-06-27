@@ -406,7 +406,7 @@ local function craft(player, recipe_index, amount)
 		minetest.add_item(pos, leftover)
 	end
 
-	if awards then
+	if awards and awards.notify_craft then
 		awards.notify_craft(player, recipe.output[1], total)
 	end
 end
@@ -523,6 +523,8 @@ end
 local function set_fs(player, scroll_index, craft_index)
 	if sfinv_installed then
 		local context = sfinv.get_or_create_context(player)
+		context.page = "fast_craft:crafting"
+		context.nav_idx = table.indexof(context.nav, context.page)
 		player:set_inventory_formspec(
 		get_craft_formspec(player, scroll_index, craft_index) ..
 		sfinv.get_nav_fs(player, context, context.nav_titles, context.nav_idx))
@@ -587,7 +589,6 @@ minetest.register_chatcommand("fast_craft", {
 	func = function(name, param)
 		local player = minetest.get_player_by_name(name)
 		set_fs(player, scroll_index, craft_index)
-		print_table(minetest.get_all_craft_recipes("mcl_stairs:stair_cobble")[1].items)
 	end,
 })
 
