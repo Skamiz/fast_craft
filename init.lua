@@ -133,6 +133,7 @@ local recipe_strings = {}
 function fast_craft.register_craft(recipe)
 	-- TODO: some validation that all the involved items exist, if not -> warning
 	recipe.output[1] = get_alias(recipe.output[1]) or recipe.output[1]
+	if not recipe.additional_output then recipe.additional_output = {} end
 
 	for item, amount in pairs(recipe.input) do
 		local ali = get_alias(item)
