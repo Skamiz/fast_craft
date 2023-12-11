@@ -101,19 +101,19 @@ minetest.register_on_mods_loaded(function()
 	-- resolve aliases
 	for _, recipe in pairs(fast_craft.registered_crafts) do
 		recipe.output[1] = get_alias(recipe.output[1]) or recipe.output[1]
-	end
-	for item, amount in pairs(recipe.additional_output) do
-		local ali = get_alias(item)
-		if ali then
-			recipe.additional_output[ali] = recipe.additional_output[item]
-			recipe.additional_output[item] = nil
+		for item, amount in pairs(recipe.additional_output) do
+			local ali = get_alias(item)
+			if ali then
+				recipe.additional_output[ali] = recipe.additional_output[item]
+				recipe.additional_output[item] = nil
+			end
 		end
-	end
-	for item, amount in pairs(recipe.input) do
-		local ali = get_alias(item)
-		if ali then
-			recipe.input[ali] = recipe.input[item]
-			recipe.input[item] = nil
+		for item, amount in pairs(recipe.input) do
+			local ali = get_alias(item)
+			if ali then
+				recipe.input[ali] = recipe.input[item]
+				recipe.input[item] = nil
+			end
 		end
 	end
 
