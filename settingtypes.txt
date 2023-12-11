@@ -1,12 +1,3 @@
-# Craft amounts
-#
-# Determines steps in which multiple items can be crafted at a time.
-# auto:
-#	1-5-25-99 for Minetest Game
-#	1-4-16-64 for Mineclone
-#	otehrwise defaults to 1-5-25-99
-crafting_steps (Crafting Steps) enum auto 1-4-16-64,1-5-25-99,auto
-
 # Import Recipes
 #
 # Whether to automatically import recipes from Minetests default

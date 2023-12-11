@@ -21,9 +21,7 @@ This is due to 'minetest.get_craft_result(recipe)' being the only way to detect
 if a recipe uses replacements. And this function is relatively slow.
 
 #settings
-This mod has three settings which can be configured from in game.
-
-'crafting_steps' - allows you to select which amounts you can craft in bulk
+This mod has two settings which can be configured from in game.
 
 'import_recipes' - allows you to disable the importing of recipes from the
 					default crafting system
@@ -33,7 +31,10 @@ This mod has three settings which can be configured from in game.
 
 #functions
 fast_craft.register_craft({
-	output = {"item_out", count},
+	output = { -- main output
+		item = "item_out",
+		count = n,
+	},
 	additional_output = { -- replacements and byproducts
 		["ao_1"] = 1
 	},
@@ -54,24 +55,4 @@ actually have some translations.
 A template is provided in the locale folder.
 
 #license
-MIT License
-
-Copyright (c) 2022 Skamiz Kazzarch
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+undecided
