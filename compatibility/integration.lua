@@ -76,6 +76,9 @@ elseif gameid == "mineclone2" or minetest.get_modpath("mcl_formspec") then
 	fast_craft.grid_color = "#b9b9b9"
 	fast_craft.highlight_color = "#84a19e"
 
+	dofile(modpath .. "/compatibility/mcl_recipe_import.lua")
+
+
 	local function get_mineclone_itemslots()
 		local out = ""
 		for x = 0, 8 do

@@ -37,6 +37,8 @@ TODO: crafting conditions can have descriptions which are displayed in recipe se
 
 TODO: consider turning bulk crafting into repeated single crafting
 
+TODO: trigger MCL crafting achievments
+
 A way to find changes in the inventory:
 	serialize it, cache it, compare with previous state
 

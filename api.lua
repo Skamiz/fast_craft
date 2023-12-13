@@ -15,18 +15,25 @@ end)
 
 -- helps to filter out duplicate recipes
 local function recipe_to_string(recipe)
-	local rs = "o:" .. recipe.output[1] .. " " .. recipe.output[2] .. "a:"
+	local rs = {}
+	rs[#rs + 1] = "o:" .. recipe.output[1] .. " " .. recipe.output[2]
 	-- TODO: this needs to order the lists alphabetically first to avoid duplicates with switched order
-	for item, count in pairs(recipe.additional_output) do
-		rs = rs .. item .. " " .. count .. ","
+	if #recipe.additional_output > 0 then
+		rs[#rs + 1] = " ao:"
+		for item, count in pairs(recipe.additional_output) do
+			rs[#rs + 1] = item .. " " .. count .. ","
+		end
 	end
-	rs = rs .. "i:"
+	rs[#rs + 1] = " i:"
 	for item, count in pairs(recipe.input) do
-		rs = rs .. item .. " " .. count .. ","
+		rs[#rs + 1] = item .. " " .. count .. ","
 	end
 	-- not checking for condition
+	-- if recipe.condition then
+	-- 	rs[#rs + 1] = " c:" .. tostring(recipe.condition)
+	-- end
 
-	return rs
+	return table.concat(rs)
 end
 
 local recipe_strings = {}
@@ -88,6 +95,8 @@ function fast_craft.register_craft(recipe)
 		recipe_strings[rs] = true
 		recipe.output.def = minetest.registered_items[recipe.output[1]]
 		registered_crafts[#registered_crafts + 1] = recipe
+	else
+		-- minetest.log("warning", "[fast_craft] Skipping duplicate recipe: " .. rs)
 	end
 end
 
