@@ -13,7 +13,7 @@ local registered_crafts = fast_craft.registered_crafts
 
 
 
-local group_icons = {
+fast_craft.group_icons = {
 	planks = "cicrev:planks_oak",
 	log = "cicrev:log_oak",
 }
@@ -21,7 +21,7 @@ local group_icons = {
 minetest.register_on_mods_loaded(function()
 	for item, def in pairs(minetest.registered_items) do
 		for group, level in pairs(def.groups or {}) do
-			if not group_icons[group] then group_icons[group] = item end
+			if not fast_craft.group_icons[group] then fast_craft.group_icons[group] = item end
 		end
 	end
 end)
@@ -65,7 +65,7 @@ local function item_image_fs(x_pos, y_pos, item, count)
 	local f = {}
 	if item:find("group") then
 		local groups = item:sub(7, -1):split()
-		f[#f + 1] = "item_image[" .. x_pos .. "," .. y_pos .. ";1,1;" .. group_icons[groups[1]] .. "]"
+		f[#f + 1] = "item_image[" .. x_pos .. "," .. y_pos .. ";1,1;" .. fast_craft.group_icons[groups[1]] .. "]"
 		f[#f + 1] = "label[" .. x_pos + 0.390625 .. "," .. y_pos + 0.5 .. ";G]"
 		f[#f + 1] = "tooltip[" .. x_pos .. "," .. y_pos .. ";1,1;" .. item .. "]"
 	else
@@ -120,7 +120,7 @@ function fast_craft.get_craft_buttons_fs(player, recipe_index)
 			fs[#fs + 1] = "button[0," .. (i-1) * 0.75 .. ";0.5,0.5;craft_" .. fast_craft.craft_sizes[i] .. "_" .. recipe_index .. ";" .. fast_craft.craft_sizes[i] .. "]"
 			fs[#fs + 1] = "tooltip[craft_" .. fast_craft.craft_sizes[i] .. "_" .. recipe_index .. ";" .. S("Craft @1", fast_craft.craft_sizes[i]) .. "]"
 		end
-		local max = fast_craft.can_craft(recipe, fast_craft.inv_to_table(player:get_inventory()))
+		local max = fast_craft.get_craft_amount(recipe, fast_craft.inv_to_table(player:get_inventory()))
 		fs[#fs + 1] = "box[0,3;0.5,0.5;#0000]"
 		fs[#fs + 1] = "button[0,3;0.5,0.5;craft_" .. max .. "_" .. recipe_index .. "max;" .. max .. "]"
 		fs[#fs + 1] = "tooltip[craft_" .. max .. "_" .. recipe_index .. "max;" .. S("Craft Maximum") .. "]"

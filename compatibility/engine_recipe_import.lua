@@ -1,11 +1,8 @@
 -- imports crafting recipes registered by the hardcoded crafting system
 
-
 -- Settings
 local import_recipes = minetest.settings:get_bool("import_recipes", true)
 local simplify_recipes = minetest.settings:get_bool("simplify_recipes", true)
-
-local require_craftin_table = minetest.get_modpath("mcl_crafting_table")
 
 local function is_3x3(recipe)
 	if recipe.width == 0 then return false end
@@ -18,12 +15,6 @@ local function is_3x3(recipe)
 	if recipe.width == 3 then return true end
 end
 
-local function crafting_bench_nearby(player)
-	local p_pos = player:get_pos():round()
-    p_pos.y = p_pos.y + 1
-
-	return minetest.find_node_near(p_pos, 3, {"mcl_crafting_table:crafting_table"}, true)
-end
 
 -- baring exceptional circumstances there never will be a larger factor
 local factors = {2, 3, 5, 7}
@@ -79,11 +70,11 @@ if import_recipes then
 						input[item] = input[item] and input[item] + 1 or 1
 					end
 
-					local condition
-					if require_craftin_table then
-						if is_3x3(recipe) then
-							condition = crafting_bench_nearby
-						end
+					local tags = {
+						["engine_import"] = true,
+					}
+					if is_3x3(recipe) then
+						tags["3x3"] = true
 					end
 
 					local fc_recipe = {
@@ -93,7 +84,7 @@ if import_recipes then
 						},
 						additional_output = a_output,
 						input = input,
-						condition = condition
+						tags = tags,
 					}
 
 					if simplify_recipes then

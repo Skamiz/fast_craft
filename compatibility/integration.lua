@@ -76,7 +76,27 @@ elseif gameid == "mineclone2" or minetest.get_modpath("mcl_formspec") then
 	fast_craft.grid_color = "#b9b9b9"
 	fast_craft.highlight_color = "#84a19e"
 
+	fast_craft.group_icons = {
+		wood = "mcl_core:wood",
+		cobble = "mcl_core:cobble",
+	}
+
 	dofile(modpath .. "/compatibility/mcl_recipe_import.lua")
+
+	fast_craft.register_condition("crafting_table_neaby", {
+		func = function(player)
+			local p_pos = player:get_pos():round()
+		    p_pos.y = p_pos.y + 1
+			return minetest.find_node_near(p_pos, 3, {"mcl_crafting_table:crafting_table"}, true)
+		end
+	})
+	fast_craft.register_condition("stonecutter_nearby", {
+		func = function(player)
+			local p_pos = player:get_pos():round()
+		    p_pos.y = p_pos.y + 1
+			return minetest.find_node_near(p_pos, 3, {"mcl_stonecutter:stonecutter"}, true)
+		end
+	})
 
 
 	local function get_mineclone_itemslots()
@@ -130,6 +150,15 @@ elseif gameid == "mineclone2" or minetest.get_modpath("mcl_formspec") then
 		if fields.show_mcl_fc then
 			show_mcl_craft_page(player, nil, nil)
 			return true
+		end
+	end)
+
+	minetest.register_on_mods_loaded(function()
+		for _, recipe in pairs(fast_craft.registered_crafts) do
+			if recipe.tags['3x3'] then
+				recipe.conditions["none"] = nil
+				recipe.conditions["crafting_table_neaby"] = true
+			end
 		end
 	end)
 elseif gameid == "survivetest" then

@@ -32,8 +32,8 @@ This mod has two settings which can be configured from in game.
 #functions
 fast_craft.register_craft({
 	output = { -- main output
-		item = "item_out",
-		count = n,
+		"item_out",
+		item_count,
 	},
 	additional_output = { -- replacements and byproducts
 		["ao_1"] = 1
@@ -43,8 +43,21 @@ fast_craft.register_craft({
 		["item_in_b"] = 2,
 		["item_in_c"] = 1,
 	},
-	condition = function(player), -- custom condition with which you can limmmit
-						-- crating to a specific time of day/player altitude/etc...
+	conditions = { -- if any one condition is true, the recipe is available
+		["name_of_condition_1"] = true,
+		["name_of_condition_2"] = true,
+	}
+})
+
+fast_craft.register_condition("none", {
+	-- returns true when condition is fulfiled, making it possible to craft recipes -- -- with this condition
+	func = function(player)
+		return true
+	end,
+
+	-- not yet used
+	description = "Short description of the condition.",
+	icon = *.png file or item name representing this condition
 })
 
 #translation

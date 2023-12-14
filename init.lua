@@ -39,8 +39,64 @@ TODO: consider turning bulk crafting into repeated single crafting
 
 TODO: trigger MCL crafting achievments
 
+TODO: function which checks whether a recipe contins both an item and a group the item belongs to
+		print a warning for these recipes, since I don't handle them correctly
+		warning: problematic recipe:
+
+
+TODO: more tags
+	{
+		["3x3"] = true,
+		["engine_immported"] = true,
+		["pmb_recipe"] = true,
+		["shaped"] = true, -- obviously after import they aren't shaped
+		["shapeless"] = true,
+		etc.. stuff like this
+		whatever metadata about the recipe might be usefull
+	}
+
 A way to find changes in the inventory:
 	serialize it, cache it, compare with previous state
+
+recipe structure:
+fast_craft.registered_crafts = {
+...,
+{
+	output = {item_name, item_count},
+	additional_output = {
+		item_name = item_count,
+		item_name = item_count,
+	},
+	input = {
+		item_name = item_count,
+		item_name = item_count,
+	},
+	-- only one conditions must be fulfiled
+	conditions = {
+		["condition_name"] = true,
+		["condition_name"] = true,
+	},
+	-- for various recipe metadata
+	tags = {
+		["engine_import"] = true,
+		["3x3"] = true,
+	}
+},
+...,
+}
+
+fast_craft.registered_conditions = {
+...,
+condition_name = {
+	name = condition_name,
+	func = function,
+	-- not used yet
+	description = condition_description,
+	icon = *.png OR item_name,
+}
+...,
+
+}
 
 
 
@@ -61,6 +117,7 @@ local modpath = minetest.get_modpath(modname)
 fast_craft = {}
 fast_craft.registered_crafts = {}
 fast_craft.registered_on_crafts = {}
+fast_craft.registered_conditions = {}
 fast_craft.translator = minetest.get_translator("fast_craft")
 
 dofile(modpath .. "/api.lua")
@@ -85,6 +142,10 @@ local function print_table(po)
 		minetest.chat_send_all(type(k) .. " : " .. tostring(k) .. " | " .. type(v) .. " : " .. tostring(v))
 	end
 end
+
+fast_craft.register_condition("none", {
+	func = function(player) return true end
+})
 
 
 local function get_alias(item)

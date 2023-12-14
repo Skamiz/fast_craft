@@ -1,3 +1,5 @@
+-- imports recipes from MCL's stonecutter
+
 
 local function stonecutter_nearby(player)
 	local p_pos = player:get_pos():round()
@@ -23,7 +25,11 @@ minetest.register_on_mods_loaded(function()
 					count,
 				},
 				input = {[input] = 1},
-				condition = stonecutter_nearby,
+				conditions = {["stonecutter_nearby"] = true},
+				tags = {
+					["mcl_import"] = true,
+					["stonecutter"] = true,
+				},
 			}
 
 			fast_craft.register_craft(fc_recipe)
